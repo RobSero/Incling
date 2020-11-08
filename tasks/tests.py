@@ -18,7 +18,7 @@ class TaskTestSuite(TestCase):
     obj_task = Task.objects.get(pk=1)
     self.assertTrue(obj_task)
     self.assertEqual(obj_task.title, 'Clear dashboard')
-
+    # self.assertEqual(obj_task.tile, None)
     
   def test_search_queries(self):
     qs_search = Task.objects.filter(Q(title__icontains='cheap') | Q(description__icontains='messy') )
