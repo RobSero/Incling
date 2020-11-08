@@ -22,4 +22,8 @@ class TileTestSuite(TestCase):
     obj_task = Task.objects.get(pk=1)
     self.assertTrue(obj_task)
     self.assertEqual(obj_task.tile.id, 1) # correctly assigned foreign key to task
-
+    
+    obj_tile = Tile.objects.get(pk=1)
+    obj_tile.delete()
+    obj_task = Task.objects.get(pk=1)
+    self.assertFalse(obj_task.tile) # task's tile foreign key should reset to Null when containing tile is deleted
