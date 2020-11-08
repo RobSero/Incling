@@ -4,7 +4,8 @@
 ## Installation and Usage
 
 - Clone or download the repo
-- Within your virtual environment, ```run pip install -r requirements.txt```
+- Within your virtual environment, run: ``` pip install -r requirements.txt``` 
+- Make your migrations
 - Run your Django server with ```python manage.py runserver```
 
  
