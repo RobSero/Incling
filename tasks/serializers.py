@@ -12,3 +12,13 @@ class TaskSerializer(ModelSerializer):
     model = Task
     fields = '__all__'
     
+
+
+class SimpleTaskSerializer(ModelSerializer):
+  """ Serializes only relevant/useful fields for read-only frontend responses  """
+    
+  class Meta:
+    model = Task
+    fields = ('id','title','description','task_type')
+    
+    
