@@ -28,7 +28,13 @@ def get_task(pk):
     except ValueError:
       raise NotAcceptable(detail='Required integer for task id, please try a different request')
 
-
+def get_filtered_tasks(pk_list):
+  try:
+    return Task.objects.filter(pk__in=pk_list)
+  except Task.DoesNotExist:
+    raise NotFound()
+  except ValueError:
+      raise NotAcceptable(detail='Required integer for task id, please try a different request')  
 
 #  ----------------------------------------------------------------------------
 #                                  TASK VIEWSETS

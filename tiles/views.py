@@ -7,7 +7,7 @@ from rest_framework.response import Response
 # Model and serializer Imports
 from .models import Tile
 from .serializers import TileSerializer
-
+from tasks.views import get_filtered_tasks
 
 #  ----------------------------------------------------------------------------
 #                                   TILE QUERIES
@@ -44,7 +44,16 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def create(self, request):
-    pass
+    qs_task_list = get_filtered_tasks(request.data["tasks"])
+    if len(qs_task_list) < 1: # check if at least one task in the request is valid to be assigned to tile
+      return Response({"Error" : "Please provide at least one valid task id"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    new_tile = TileSerializer(data=request.data) # validate and save
+    if new_tile.is_valid():
+      obj_new_tile = new_tile.save()
+      obj_new_tile.tasks.add(*qs_task_list) # assign valid tasks from request to the created tile
+      obj_new_tile.save()
+      return Response(new_tile.data, status=status.HTTP_201_CREATED)
+    return Response(new_tile.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
   
   
   
