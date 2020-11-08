@@ -44,6 +44,7 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def create(self, request):
+    # A tile must have at least one task contained within it - the create method requires a valid array of task ids in the request body (please see README for reference)
     qs_task_list = get_filtered_tasks(request.data["tasks"]) # get tasks from within request body
     if len(qs_task_list) < 1: # check if at least one task in the request exists to be assigned to new tile
       return Response({"Error" : "Please provide at least one valid task id"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)

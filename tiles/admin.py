@@ -6,6 +6,7 @@ from tasks.models import Task
 
 
 class TaskInline(admin.TabularInline):
+  """ Task inline view admin setup  """
   model = Task
 
 class TileAdmin(admin.ModelAdmin):
