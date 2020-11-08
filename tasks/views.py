@@ -7,7 +7,7 @@ from rest_framework.response import Response
 # Model and serializer Imports
 from .models import Task
 from .serializers import TaskSerializer
-
+from .models import Tile
 
 #  ----------------------------------------------------------------------------
 #                                   TASK QUERIES
@@ -20,6 +20,7 @@ def get_all_tasks():
     except Task.DoesNotExist:
       raise NotFound(detail='Tasks could not be found, please try a different request')
     
+    
 def get_task(pk):
     try:
       return Task.objects.get(pk=pk)
@@ -28,6 +29,7 @@ def get_task(pk):
     except ValueError:
       raise NotAcceptable(detail='Required integer for task id, please try a different request')
 
+
 def get_filtered_tasks(pk_list):
   try:
     return Task.objects.filter(pk__in=pk_list)
@@ -35,6 +37,17 @@ def get_filtered_tasks(pk_list):
     raise NotFound()
   except ValueError:
       raise NotAcceptable(detail='Required integer for task id, please try a different request')  
+ 
+    
+def validate_tile_changes(current_tile=None, new_tile=None):
+    """ checks if the task will be removed from it's tile and checks if the current tile's tasklist will have at least one task remaining in it """
+    if current_tile == new_tile:  #check new tile does not match the current tile
+      return True 
+    obj_tile = Tile.objects.get(pk=current_tile) 
+    if obj_tile.tasklist_length() < 2: 
+      return False
+    return True
+
 
 #  ----------------------------------------------------------------------------
 #                                  TASK VIEWSETS
@@ -59,20 +72,38 @@ class TaskViewSet(viewsets.ViewSet):
   
   
   def retrieve(self, request, pk=None):
-    qs_task = get_task(pk=pk)
-    serialized_task = TaskSerializer(qs_task)
+    obj_task = get_task(pk=pk)
+    serialized_task = TaskSerializer(obj_task)
     return Response(serialized_task.data, status=status.HTTP_200_OK)
   
   
   def update(self,request, pk=None):
-    pass
+    obj_task = get_task(pk=pk)
+    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request
+    if obj_task.tile: # check if task has a current tile
+      if not validate_tile_changes(current_tile=obj_task.tile.id, new_tile=new_tile): 
+        return Response({"Error" : f"Current Tile {obj_task.tile.id} must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    serialized_task = TaskSerializer(obj_task,data=request.data)
+    if serialized_task.is_valid():
+      serialized_task.save()
+      return Response(serialized_task.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serialized_task.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
   
   
   def partial_update(self,request, pk=None):
-    pass
+    obj_task = get_task(pk=pk)
+    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request
+    if obj_task.tile: # check if task has a current tile
+      if not validate_tile_changes(current_tile=obj_task.tile.id, new_tile=new_tile): 
+        return Response({"Error" : f"Current Tile {obj_task.tile.id} must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    serialized_task = TaskSerializer(obj_task,data=request.data, partial=True)
+    if serialized_task.is_valid():
+      serialized_task.save()
+      return Response(serialized_task.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serialized_task.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
   
   
   def destroy(self,request, pk=None):
-    qs_task = get_task(pk=pk)
-    qs_task.delete()
+    obj_task = get_task(pk=pk)
+    obj_task.delete()
     return Response({'message': 'deleted successfully'}, status=status.HTTP_202_ACCEPTED)
