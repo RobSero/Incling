@@ -45,6 +45,9 @@ class TileViewSet(viewsets.ViewSet):
   
   def create(self, request):
     # A tile must have at least one task contained within it - the create method requires a valid array of task ids in the request body (please see README for reference)
+    print(request.data.get('tasks', True))
+    if not request.data.get('tasks', False): # check task array exists in request body
+      return Response({"Error" : "Please provide array of tasks to be added to tile"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     qs_task_list = get_filtered_tasks(request.data["tasks"]) # get tasks from within request body
     if len(qs_task_list) < 1: # check if at least one task in the request exists to be assigned to new tile
       return Response({"Error" : "Please provide at least one valid task id"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -86,4 +89,4 @@ class TileViewSet(viewsets.ViewSet):
     # sets any contained tasks with one-to-many relationship to null foreign key
     obj_task = get_tile(pk=pk)
     obj_task.delete()
-    return Response({'message': 'deleted successfully'}, status=status.HTTP_202_ACCEPTED)
+    return Response({'message': 'deleted successfully, all contained tasks still remain'}, status=status.HTTP_202_ACCEPTED)
