@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+# Model Imports
+from .models import Task
+
+admin.site.register(Task)
