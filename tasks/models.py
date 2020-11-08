@@ -1,5 +1,7 @@
 from django.db import models
-
+from django.db.models.signals import pre_save
+import random
+import string
 
 #  ----------------------------------------------------------------------------
 #                                     MODEL
@@ -35,4 +37,16 @@ class Task(models.Model):
   
   def __str__(self):
     return f'{self.title} - {self.description}'
+
+
+#  ----------------------------------------------------------------------------
+#                                     SIGNALS
+#  ----------------------------------------------------------------------------
+
+
+def task_order_generator(sender,instance, **kwargs):
+  """ Generates a random order reference number on task creation  """
+  if not instance.order:
+    instance.order = ''.join(random.choices(string.ascii_uppercase + string.digits,k=15))
   
+pre_save.connect(task_order_generator,sender=Task)
