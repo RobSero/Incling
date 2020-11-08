@@ -44,10 +44,10 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def create(self, request):
-    qs_task_list = get_filtered_tasks(request.data["tasks"])
-    if len(qs_task_list) < 1: # check if at least one task in the request is valid to be assigned to tile
+    qs_task_list = get_filtered_tasks(request.data["tasks"]) # get tasks from within request body
+    if len(qs_task_list) < 1: # check if at least one task in the request exists to be assigned to new tile
       return Response({"Error" : "Please provide at least one valid task id"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-    new_tile = TileSerializer(data=request.data) # validate and save
+    new_tile = TileSerializer(data=request.data)
     if new_tile.is_valid():
       obj_new_tile = new_tile.save()
       obj_new_tile.tasks.add(*qs_task_list) # assign valid tasks from request to the created tile
@@ -58,20 +58,30 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def retrieve(self, request, pk=None):
-    qs_tile = get_tile(pk=pk)
-    serialized_tile = TileSerializer(qs_tile)
+    obj_tile = get_tile(pk=pk)
+    serialized_tile = TileSerializer(obj_tile)
     return Response(serialized_tile.data, status=status.HTTP_200_OK)
   
   
   def update(self,request, pk=None):
-    pass
+    obj_tile = get_tile(pk=pk)
+    serialized_tile = TileSerializer(obj_tile,data=request.data)
+    if serialized_tile.is_valid():
+      serialized_tile.save()
+      return Response(serialized_tile.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serialized_tile.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
   
   
   def partial_update(self,request, pk=None):
-    pass
+    obj_tile = get_tile(pk=pk)
+    serialized_tile = TileSerializer(obj_tile,data=request.data, partial=True)
+    if serialized_tile.is_valid():
+      serialized_tile.save()
+      return Response(serialized_tile.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serialized_tile.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
   
   
   def destroy(self,request, pk=None):
-    qs_task = get_tile(pk=pk)
-    qs_task.delete()
+    obj_task = get_tile(pk=pk)
+    obj_task.delete()
     return Response({'message': 'deleted successfully'}, status=status.HTTP_202_ACCEPTED)
