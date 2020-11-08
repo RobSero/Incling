@@ -15,6 +15,5 @@ class TileSerializer(ModelSerializer):
   class Meta:
     model = Tile
     fields = '__all__'
-    
 
 
