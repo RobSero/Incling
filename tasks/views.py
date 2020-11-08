@@ -44,9 +44,12 @@ def validate_tile_changes(current_tile=None, new_tile=None):
     """ checks if the task will be removed from it's tile and checks if the current tile's tasklist will have at least one task remaining in it """
     if current_tile == new_tile:  #check new tile does not match the current tile
       return True 
-    obj_tile = Tile.objects.get(pk=current_tile) 
-    if obj_tile.tasklist_length() < 2: 
-      return False
+    try:
+      obj_tile = Tile.objects.get(pk=current_tile) 
+      if obj_tile.tasklist_length() < 2: 
+        return False
+    except ValueError:
+      raise NotAcceptable(detail='Required integer for tile id, please try a different request')
     return True
 
 
@@ -79,6 +82,7 @@ class TaskViewSet(viewsets.ViewSet):
   
   
   def update(self,request, pk=None):
+    # Prior to updating, this will check if the current task's assigned tile has at least one remaining task within it before the task will be assigned.
     obj_task = get_task(pk=pk)
     new_tile = request.data.get('tile', False) # check if a new tile has been included in the request
     if obj_task.tile: # check if task has a current tile
@@ -92,8 +96,9 @@ class TaskViewSet(viewsets.ViewSet):
   
   
   def partial_update(self,request, pk=None):
+    # Prior to updating, this will check if the current task's assigned tile has at least one remaining task within it before the task will be assigned.
     obj_task = get_task(pk=pk)
-    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request
+    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request, serializer will ignore False and keep existing tile
     if obj_task.tile: # check if task has a current tile
       if not validate_tile_changes(current_tile=obj_task.tile.id, new_tile=new_tile): 
         return Response({"Error" : f"Current Tile {obj_task.tile.id} must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -106,5 +111,8 @@ class TaskViewSet(viewsets.ViewSet):
   
   def destroy(self,request, pk=None):
     obj_task = get_task(pk=pk)
+    if obj_task.tile: 
+      if not validate_tile_changes(current_tile=obj_task.tile.id): 
+          return Response({"Error" : f"Current Tile must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     obj_task.delete()
     return Response({'message': 'deleted successfully'}, status=status.HTTP_202_ACCEPTED)
