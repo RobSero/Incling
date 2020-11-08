@@ -8,7 +8,7 @@ from tasks.views import get_task
 
 
 class TileSerializer(ModelSerializer):
-  """  Serialize Tile Data including assigned nested tasks   """
+  """  Serialize Tile Data including assigned nested tasks, uses a reduced fields serializer for read-only purposes   """
   
   tasks = SimpleTaskSerializer(many=True, read_only=True)
   
