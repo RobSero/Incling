@@ -3,6 +3,9 @@ from django.db.models.signals import pre_save
 import random
 import string
 
+# Model Imports
+from tiles.models import Tile
+
 #  ----------------------------------------------------------------------------
 #                                     MODEL
 #  ----------------------------------------------------------------------------
@@ -28,11 +31,11 @@ class Task(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   order = models.CharField(max_length=15, blank=True)
-  # tile = models.ForeignKey(Tile, 
-  #                          related_name='tasks',
-  #                          on_delete=models.PROTECT, 
-  #                          blank=True, 
-  #                          null=True)
+  tile = models.ForeignKey(Tile, 
+                           related_name='tasks',
+                           on_delete=models.PROTECT, 
+                           blank=True, 
+                           null=True)
   
   
   def __str__(self):
