@@ -4,7 +4,6 @@ from rest_framework.serializers import ModelSerializer
 # Model and serializer Imports
 from .models import Tile
 from tasks.serializers import SimpleTaskSerializer
-from tasks.views import get_task
 
 
 class TileSerializer(ModelSerializer):

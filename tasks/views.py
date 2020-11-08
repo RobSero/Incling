@@ -1,13 +1,14 @@
 # REST Framework Imports
 from rest_framework import status
-from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework import viewsets
+from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework.response import Response
 
 # Model and serializer Imports
 from .models import Task
-from .serializers import TaskSerializer
 from .models import Tile
+from .serializers import TaskSerializer
+
 
 #  ----------------------------------------------------------------------------
 #                                   TASK QUERIES

@@ -1,7 +1,7 @@
 # REST Framework Imports
 from rest_framework import status
-from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework import viewsets
+from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework.response import Response
 
 # Model and serializer Imports
@@ -83,6 +83,7 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def destroy(self,request, pk=None):
+    # sets any contained tasks with one-to-many relationship to null foreign key
     obj_task = get_tile(pk=pk)
     obj_task.delete()
     return Response({'message': 'deleted successfully'}, status=status.HTTP_202_ACCEPTED)

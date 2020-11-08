@@ -1,5 +1,6 @@
-from django.test import TestCase
 from django.db.models import Q
+from django.test import TestCase
+
 
 # Model and serializer Imports
 from .models import Task
@@ -21,7 +22,7 @@ class TaskTestSuite(TestCase):
     # self.assertEqual(obj_task.tile, None)
     
   def test_search_queries(self):
-    qs_search = Task.objects.filter(Q(title__icontains='cheap') | Q(description__icontains='messy') )
+    qs_search = Task.objects.filter(Q(title__icontains='cheap') | Q(description__icontains='messy'))
     self.assertTrue(qs_search)
     self.assertEqual(len(qs_search), 2)
     self.assertEqual(qs_search.last().title, 'Get Cheap Pens')
