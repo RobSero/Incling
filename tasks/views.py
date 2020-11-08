@@ -84,8 +84,8 @@ class TaskViewSet(viewsets.ViewSet):
   def update(self,request, pk=None):
     # Prior to updating, this will check if the current task's assigned tile has at least one remaining task within it before the task will be assigned.
     obj_task = get_task(pk=pk)
-    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request
     if obj_task.tile: # check if task has a current tile
+      new_tile = request.data.get('tile', obj_task.tile.id)  # check if a new tile has been included in the request, if none is provided, keep the current tile
       if not validate_tile_changes(current_tile=obj_task.tile.id, new_tile=new_tile): 
         return Response({"Error" : f"Current Tile {obj_task.tile.id} must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     serialized_task = TaskSerializer(obj_task,data=request.data)
@@ -98,8 +98,8 @@ class TaskViewSet(viewsets.ViewSet):
   def partial_update(self,request, pk=None):
     # Prior to updating, this will check if the current task's assigned tile has at least one remaining task within it before the task will be assigned.
     obj_task = get_task(pk=pk)
-    new_tile = request.data.get('tile', False) # check if a new tile has been included in the request, serializer will ignore False and keep existing tile
     if obj_task.tile: # check if task has a current tile
+      new_tile = request.data.get('tile', obj_task.tile.id) # check if a new tile has been included in the request, if none is provided, keep the current tile
       if not validate_tile_changes(current_tile=obj_task.tile.id, new_tile=new_tile): 
         return Response({"Error" : f"Current Tile {obj_task.tile.id} must have at least one task"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     serialized_task = TaskSerializer(obj_task,data=request.data, partial=True)
@@ -110,6 +110,7 @@ class TaskViewSet(viewsets.ViewSet):
   
   
   def destroy(self,request, pk=None):
+    # Task may only be deleted if the containing Tile still has one remaining Task within it
     obj_task = get_task(pk=pk)
     if obj_task.tile: 
       if not validate_tile_changes(current_tile=obj_task.tile.id): 
