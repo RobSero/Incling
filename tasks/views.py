@@ -1,6 +1,6 @@
 # REST Framework Imports
 from rest_framework import status
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -25,6 +25,8 @@ def get_task(pk):
       return Task.objects.get(pk=pk)
     except Task.DoesNotExist:
       raise NotFound(detail='Task does not appear to exist, please try a different request')
+    except ValueError:
+      raise NotAcceptable(detail='Required integer for task id, please try a different request')
 
 
 
