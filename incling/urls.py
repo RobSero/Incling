@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 
 # View Imports
 from tasks.views import TaskViewSet
-from tiles.views import TileViewSet
+from tiles.views import TileViewSet, TileStatusView
 
 
 router = DefaultRouter()
@@ -18,4 +18,5 @@ router.register('tasks', TaskViewSet, basename='task-viewset')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/tiles/status/<int:status>', TileStatusView.as_view())
 ]

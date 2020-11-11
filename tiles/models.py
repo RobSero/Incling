@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 #  ----------------------------------------------------------------------------
@@ -9,13 +10,14 @@ class Tile(models.Model):
     #   -------- TILE STATUS CHOICES -------------
   
   TILE_STATUS = [
-    (0, 'Pending'),
-    (1, 'Live'),
-    (2, 'Archived')
+    (0, 'Live'),
+    (1, 'Draft'),
+    (2, 'Pending'),
+    (3, 'Archived')
   ]
   
     # -------------- FIELDS -------------------
-  launch_date = models.DateTimeField(auto_now_add=True)
+  launch_date = models.DateTimeField(default=datetime.now)
   status = models.PositiveIntegerField(
     choices= TILE_STATUS,
     default=0)

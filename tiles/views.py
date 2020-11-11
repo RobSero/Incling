@@ -3,11 +3,11 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # Model and serializer Imports
 from .models import Tile
 from .serializers import TileSerializer
-from tasks.views import get_filtered_tasks
 
 #  ----------------------------------------------------------------------------
 #                                   TILE QUERIES
@@ -23,6 +23,14 @@ def get_all_tiles():
 def get_tile(pk):
     try:
       return Tile.objects.get(pk=pk)
+    except Tile.DoesNotExist:
+      raise NotFound(detail='Tile does not appear to exist, please try a different request')
+    except ValueError:
+      raise NotAcceptable(detail='Required integer for task id, please try a different request')
+    
+def get_tiles_by_status(status):
+    try:
+      return Tile.objects.filter(status=status).order_by('launch_date')
     except Tile.DoesNotExist:
       raise NotFound(detail='Tile does not appear to exist, please try a different request')
     except ValueError:
@@ -44,17 +52,10 @@ class TileViewSet(viewsets.ViewSet):
   
   
   def create(self, request):
-    # A tile must have at least one task contained within it - the create method requires a valid array of task ids in the request body (please see README for reference)
-    print(request.data.get('tasks', True))
-    if not request.data.get('tasks', False): # check task array exists in request body
-      return Response({"Error" : "Please provide array of tasks to be added to tile"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-    qs_task_list = get_filtered_tasks(request.data["tasks"]) # get tasks from within request body
-    if len(qs_task_list) < 1: # check if at least one task in the request exists to be assigned to new tile
-      return Response({"Error" : "Please provide at least one valid task id"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    # UPDATED SINCE PRE-TASK, NOW ONLY REQUIRES A STATUS FIELD
     new_tile = TileSerializer(data=request.data)
     if new_tile.is_valid():
       obj_new_tile = new_tile.save()
-      obj_new_tile.tasks.add(*qs_task_list) # assign valid tasks from request to the created tile
       obj_new_tile.save()
       return Response(new_tile.data, status=status.HTTP_201_CREATED)
     return Response(new_tile.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -87,6 +88,18 @@ class TileViewSet(viewsets.ViewSet):
   
   def destroy(self,request, pk=None):
     # sets any contained tasks with one-to-many relationship to null foreign key
-    obj_task = get_tile(pk=pk)
-    obj_task.delete()
+    obj_tile = get_tile(pk=pk)
+    obj_tile.delete()
     return Response({'message': 'deleted successfully, all contained tasks still remain'}, status=status.HTTP_202_ACCEPTED)
+  
+  
+class TileStatusView(APIView):
+  def get(self, request, status=None):
+    if status == 4:
+      qs_all_tiles = get_all_tiles()
+    else:
+      qs_all_tiles = get_tiles_by_status(status=status)
+    serialized_tiles = TileSerializer(qs_all_tiles, many=True)
+    return Response(serialized_tiles.data)
+
+    

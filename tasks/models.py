@@ -30,10 +30,10 @@ class Task(models.Model):
   )
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
-  order = models.CharField(max_length=15, blank=True)
+  order = models.IntegerField(default=0)
   tile = models.ForeignKey(Tile, 
                            related_name='tasks',
-                           on_delete=models.SET_NULL, 
+                           on_delete=models.CASCADE, 
                            blank=True, 
                            null=True)
   
@@ -47,9 +47,12 @@ class Task(models.Model):
 #  ----------------------------------------------------------------------------
 
 
-def task_order_generator(sender,instance, **kwargs):
-  """ Generates a random order reference number on task creation  """
-  if not instance.order:
-    instance.order = ''.join(random.choices(string.ascii_uppercase + string.digits,k=15))
+
+# REDESIGNED HOW TASK ORDERS ARE MANAGED SINCE THE PRE-TASK AS PER ROB'S COMMENT, OMITTED PRE-SAVE NOW AND ORDER ASSIGNMENT IS NOW WIHIN THE CREATE VIEW
+
+# def task_order_generator(sender,instance, **kwargs):
+#   """ Generates a random order reference number on task creation  """
+#   if not instance.order:
+#     instance.order = ''.join(random.choices(string.ascii_uppercase + string.digits,k=15))
   
-pre_save.connect(task_order_generator,sender=Task)
+# pre_save.connect(task_order_generator,sender=Task)
