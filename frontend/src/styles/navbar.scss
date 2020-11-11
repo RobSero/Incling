@@ -1,0 +1,21 @@
+nav {
+  position: fixed;
+  background-image: linear-gradient(rgb(94, 88, 88), rgba(94, 88, 88, 0));
+  height: 40px;
+  width: 100%;
+
+  .nav-item {
+    display: inline-block;
+    font-size: 3rem;
+    margin: 3px;
+    color: white;
+  }
+
+  .user-details {
+    float: left;
+  }
+
+  .search-fields {
+    float: right;
+  }
+}
