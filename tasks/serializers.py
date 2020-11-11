@@ -19,6 +19,6 @@ class SimpleTaskSerializer(ModelSerializer):
     
   class Meta:
     model = Task
-    fields = ('id','title','description','task_type')
+    fields = ('id','title','description','task_type', 'order')
     
     
