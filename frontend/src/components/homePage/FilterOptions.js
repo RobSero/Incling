@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
@@ -19,3 +20,8 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 }
 
 export default FilterOptions
+
+FilterOptions.propTypes = {
+  filteredTileStatus: PropTypes.number,
+  filterTiles: PropTypes.func.isRequired
+}

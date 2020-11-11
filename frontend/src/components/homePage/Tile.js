@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 import TileStatusSelect from '../common/TileStatusSelect'
 import LaunchDate from '../common/LaunchDate'
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -63,3 +65,13 @@ function Tile({ tasks, id, launch_date, status, changeTileStatus, deleteTile, up
 }
 
 export default Tile
+
+Tile.propTypes = {
+  tasks: PropTypes.array.isRequired,
+   id : PropTypes.number.isRequired, 
+   launch_date: PropTypes.string.isRequired, 
+   status: PropTypes.number.isRequired, 
+   changeTileStatus: PropTypes.func.isRequired, 
+   deleteTile: PropTypes.func.isRequired,
+   updateTileDate: PropTypes.func.isRequired
+}
