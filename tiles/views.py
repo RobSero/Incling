@@ -16,7 +16,7 @@ from .serializers import TileSerializer
 #  just for bit of consistency despite slightly more lines of code
 def get_all_tiles():
     try:
-      return Tile.objects.all()
+      return Tile.objects.all().order_by('launch_date')
     except Tile.DoesNotExist:
       raise NotFound(detail='Tiles could not be found, please try a different request')
 

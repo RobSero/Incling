@@ -23,7 +23,7 @@ class Task(models.Model):
   
   # --------------FIELDS -------------------
   title = models.CharField(max_length=50)
-  description = models.TextField(max_length=250)
+  description = models.TextField(max_length=500)
   task_type = models.PositiveIntegerField(  # used PositiveIntegerField rather than CharField to reduce hardcoding and I tend to prefer storing numbers to strings
     choices=TASK_TYPES,
     default=0

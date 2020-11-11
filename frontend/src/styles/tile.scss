@@ -1,0 +1,148 @@
+.tile-container {
+  background-color: white;
+  width: 300px;
+  margin: 15px 0;
+  height: 300px;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.5s ease;
+  box-shadow: rgb(189, 188, 188) 0 0 3px 3px;
+
+  &:hover {
+    transform: translateY(-10px) ;
+    box-shadow: rgb(189, 188, 188) 0 7px 7px 7px;
+    z-index: 2;
+  }
+
+  .tile-status {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+  }
+
+  .edit-tile-buttons {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: white;
+  }
+
+  .tile-image {
+    width: 100%;
+    height: 50%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+
+  .title-details {
+    text-align: center;
+    padding: 20px 40px;
+    position: relative;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    .task-title {
+      font-size: 2rem;
+    }
+
+
+    .change-task-arrow {
+      position: absolute;
+      top: 50%;
+    }
+
+    .left-arrow {
+      left: 5px;
+    }
+
+    .right-arrow {
+      right: 5px;
+    }
+  }
+
+  .view-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 1.2rem;
+  }
+
+  .task-type {
+    font-size: 1.1rem;
+    margin: 5px;
+  }
+
+  .task-number {
+    position: absolute;
+    top: 90px;
+    color: white;
+    left: 8px;
+    font-size: 1.4rem;
+    background: rgba(151, 153, 151, 0.753);
+    padding: 18px 15px;
+    border-radius: 50%;
+  }
+
+  .tile-date {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 1.1rem;
+
+    .date-picker {
+      font-size: 1.1rem;
+      width: 100px;
+    }
+  }
+}
+
+
+
+
+
+//  ------------------------------------------------------
+//                      NEW TILE OUTLINE
+//  ------------------------------------------------------
+
+
+.new-tile {
+  border: 3px grey dashed;
+  text-align: center;
+  background-color: transparent;
+  box-shadow: inset 0 0 4px 4px rgb(212, 212, 212);
+  transition: all 0.5s ease;
+
+  .new-button {
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    background-color: transparent;
+    border: 3px grey dashed;
+    left: 100px;
+    top: 125px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+
+.empty-tile {
+  border: 3px grey solid;
+  text-align: center;
+  background-image: linear-gradient(rgba(238, 235, 37, 0.596), rgba(72, 173, 111, 0.37));
+
+  .empty-tile-details {
+    margin-top: 30%;
+    p {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+

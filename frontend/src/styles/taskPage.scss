@@ -1,0 +1,98 @@
+.task-container {
+  padding: 10px;
+  padding-top: 60px;
+  
+}
+
+.task-section, .description-section {
+  background-color: rgb(151, 206, 151);
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 15px;
+  padding: 50px 10px;
+  text-align: center;
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 5px;
+  }
+
+  .task-description {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.description-section {
+  padding: 25px 10px;
+  background: rgb(221, 218, 218);
+}
+
+.task-options {
+  text-align: center;
+  margin-top: 1rem;
+
+  .icon-large {
+    font-size: 3rem;
+    fill: grey;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .task-section, .description-section {
+    width: 80%;
+    margin: 0 auto;
+
+    padding: 50px 5px;
+    text-align: center;
+}
+}
+
+
+
+
+//  ------------------------------------------------------
+//                      FORM SECTION
+//  ------------------------------------------------------
+
+label {
+  font-size: 1.4rem;
+}
+
+.task-input {
+  font-size: 2rem;
+  width: 50%;
+  min-width: 200px;
+  border-radius: 8px;
+  padding: 5px;
+  border: grey 1px solid;
+}
+
+.text-area {
+  height: 250px;
+}
+
+.task-type-input {
+  font-size: 2rem;
+}
+
+.submit-button {
+  width: 150px;
+  padding: 10px;
+  font-size: 1.4rem;
+  border: grey 1px solid;
+  margin: 15px;
+
+  &:hover {
+    box-shadow: 0 3px 3px 3px rgb(179, 176, 176);
+    transform: translateY(-6px);
+  }
+}
