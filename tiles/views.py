@@ -64,6 +64,7 @@ class TileViewSet(viewsets.ViewSet):
   
   def retrieve(self, request, pk=None):
     obj_tile = get_tile(pk=pk)
+    obj_tile.save()
     serialized_tile = TileSerializer(obj_tile)
     return Response(serialized_tile.data, status=status.HTTP_200_OK)
   
@@ -79,6 +80,9 @@ class TileViewSet(viewsets.ViewSet):
   
   def partial_update(self,request, pk=None):
     obj_tile = get_tile(pk=pk)
+    task_order = request.data.get('task_order', None)
+    if task_order:
+      obj_tile.set_task_order(task_order)
     serialized_tile = TileSerializer(obj_tile,data=request.data, partial=True)
     if serialized_tile.is_valid():
       serialized_tile.save()

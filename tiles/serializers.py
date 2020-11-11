@@ -9,15 +9,10 @@ from tasks.serializers import SimpleTaskSerializer
 class TileSerializer(ModelSerializer):
   """  Serialize Tile Data including assigned nested tasks, uses a reduced fields serializer for read-only purposes   """
   
-  # tasks = SimpleTaskSerializer(many=True, read_only=True)
-  tasks = SerializerMethodField()
+  tasks = SimpleTaskSerializer(many=True, read_only=True)
   
   class Meta:
     model = Tile
     fields = '__all__'
     
-  def get_tasks(self, instance):
-    tasks = instance.tasks.order_by('order')
-    return SimpleTaskSerializer(tasks, read_only=True, many=True).data
-
 

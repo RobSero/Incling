@@ -37,6 +37,9 @@ class Task(models.Model):
                            blank=True, 
                            null=True)
   
+  class Meta:
+    order_with_respect_to = 'tile'
+  
   
   def __str__(self):
     return f'{self.title} - {self.description}'
