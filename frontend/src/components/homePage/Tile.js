@@ -23,7 +23,7 @@ function Tile({ tasks, id, launch_date, status, changeTileStatus, deleteTile, up
 
   if (tasks.length == 0) {
     return (
-      <div className='tile-container empty-tile'>
+      <div className='tile-container empty-tile animate__animated animate__fadeIn'>
         <TileStatusSelect status={status} id={id} changeTileStatus={changeTileStatus} />
         <div className='edit-tile-buttons'>
           <DeleteIcon className='icon-sml' onClick={() => { deleteTile(id) }} />
@@ -41,7 +41,7 @@ function Tile({ tasks, id, launch_date, status, changeTileStatus, deleteTile, up
   // --------------- IF TILE HAS TASKS, RETURN TASKLIST--------------------
 
   return (
-    <div className='tile-container'>
+    <div className='tile-container animate__animated animate__fadeIn'>
       <TileStatusSelect status={status} id={id} changeTileStatus={changeTileStatus} />
       <div className='edit-tile-buttons'>
         <Link to={`/tiles/${id}/newtask`}><AddCircleOutlineIcon className='icon-sml' /></Link>

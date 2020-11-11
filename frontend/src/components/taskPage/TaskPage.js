@@ -36,7 +36,7 @@ function TaskPage(props) {
 
   return (
     <div className='task-container'>
-      <div className='task-section'>
+      <div className='task-section  animate__animated animate__fadeIn'>
         <h4>{taskTypes[task.task_type]}</h4>
         <h1>{task.title}</h1>
         <p>created on {new Date(task.created_at).toLocaleDateString()}</p>
@@ -46,7 +46,7 @@ function TaskPage(props) {
         </div>
       </div>
       <br />
-      <div className='description-section'>
+      <div className='description-section  animate__animated animate__fadeIn'>
         <p className='task-description-header'>Task Overview</p>
         <p className='task-description'>{task.description}</p>
       </div>

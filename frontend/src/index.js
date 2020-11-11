@@ -8,6 +8,7 @@ import './styles/homePage.scss'
 import './styles/taskPage.scss'
 import './styles/tile.scss'
 import './styles/navbar.scss'
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <React.StrictMode>

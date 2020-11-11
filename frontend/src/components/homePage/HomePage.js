@@ -5,7 +5,7 @@ import HeaderSection from './HeaderSection'
 import FilterOptions from './FilterOptions'
 import NewTile from './NewTile'
 import Tile from './Tile'
-
+import { message } from 'antd';
 
 
 function HomePage() {
@@ -13,8 +13,12 @@ function HomePage() {
   const [filteredTileStatus, setTileFilter] = React.useState(0)
 
   const getTilelist = async (status) => {
-    const response = await getTilesByStatusRequest(status)
-    setTiles(response.data)
+    try {
+      const response = await getTilesByStatusRequest(status)
+      setTiles(response.data)
+    } catch (err) {
+      console.log(err.response);
+    }
   }
 
 
@@ -32,29 +36,49 @@ function HomePage() {
 
   const localTileFilter = (tileId) => {
     const reducedArray = allTiles.filter(tile => {
-      if (tile.id !== tileId) {return tile}
+      if (tile.id !== tileId) { return tile }
     })
     setTiles(reducedArray)
   }
 
 
-  const createTile = async() => {
-    await createTileRequest(filteredTileStatus)
-    getTilelist(filteredTileStatus)
+  const createTile = async () => {
+    try {
+      await createTileRequest(filteredTileStatus)
+      getTilelist(filteredTileStatus)
+      message.success('Tile Created!');
+    } catch (err) {
+      console.log(err);
+      message.error('Failed, please try again');
+    }
+
   }
 
-  const deleteTile = async(tileId) => {
-    await deleteTileRequest(tileId)
-    localTileFilter(tileId)
-  }
-
-  const changeTileStatus = async(tileId, event) => {
-    const newStatus = event.target.value
-    await changeTileStatusRequest(tileId, newStatus)
-    if(filteredTileStatus !== 4){
+  const deleteTile = async (tileId) => {
+    try {
+      await deleteTileRequest(tileId)
       localTileFilter(tileId)
+    } catch (err) {
+      console.log(err);
+      message.error('Failed, please try again');
     }
   }
+
+  const changeTileStatus = async (tileId, event) => {
+    const newStatus = event.target.value
+    try {
+      await changeTileStatusRequest(tileId, newStatus)
+      message.success('Changed Tile Status');
+      if (filteredTileStatus !== 4) {
+        localTileFilter(tileId)
+      }
+    } catch (err) {
+      console.log(err);
+      message.error('Failed, please try again');
+    }
+  }
+
+
 
   const updateTileDate = async (tileId, newDate) => {
     await updateTileLaunchDateRequest(tileId, newDate.toISOString())

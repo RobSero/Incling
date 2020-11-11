@@ -110,7 +110,7 @@
 
 
 .new-tile {
-  border: 3px grey dashed;
+  border: 1px rgb(199, 193, 193) dashed;
   text-align: center;
   background-color: transparent;
   box-shadow: inset 0 0 4px 4px rgb(212, 212, 212);
@@ -121,7 +121,7 @@
     height: 50px;
     width: 100px;
     background-color: transparent;
-    border: 3px grey dashed;
+    border: 2px rgb(163, 158, 158) dashed;
     left: 100px;
     top: 125px;
 
@@ -133,7 +133,6 @@
 
 
 .empty-tile {
-  border: 3px grey solid;
   text-align: center;
   background-image: linear-gradient(rgba(238, 235, 37, 0.596), rgba(72, 173, 111, 0.37));
 
