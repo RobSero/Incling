@@ -4,8 +4,8 @@ import React from 'react'
 import { getTilesByStatusRequest, createTileRequest, deleteTileRequest, updateTileLaunchDateRequest } from '../../utils/api'
 
 // Component Imports
-import HeaderSection from './HeaderSection'
 import FilterOptions from './FilterOptions'
+import HeaderSection from './HeaderSection'
 import NewTile from './NewTile'
 import Tile from './Tile'
 

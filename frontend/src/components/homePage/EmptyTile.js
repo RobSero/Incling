@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // Component Imports
-import TileStatusSelect from '../common/TileStatusSelect'
 import LaunchDate from '../common/LaunchDate'
-import DeleteIcon from '@material-ui/icons/Delete';
+import TileStatusSelect from '../common/TileStatusSelect'
 
 // Third Party Imports
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function EmptyTile({id, launch_date, updateTileDate, deleteTile, currentStatus, changeTileStatus}) {

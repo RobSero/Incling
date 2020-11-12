@@ -7,17 +7,17 @@ import { updateTileTaskOrderRequest, changeTileStatusRequest } from '../../utils
 import { taskTypes } from '../../utils/taskTypes'
 
 // Component Imports
+import EmptyTile from './EmptyTile'
+import LaunchDate from '../common/LaunchDate'
 import TaskOrderModal from '../common/TaskOrderModal'
 import TileStatusSelect from '../common/TileStatusSelect'
-import LaunchDate from '../common/LaunchDate'
-import EmptyTile from './EmptyTile'
 
 // Third Party Imports
-import { message } from 'antd';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { message } from 'antd';
 
 
 function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, localTileFilter }) {

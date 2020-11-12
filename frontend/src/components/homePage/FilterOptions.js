@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 // Third Party Imports
 import AllInboxIcon from '@material-ui/icons/AllInbox';
-import LiveTvIcon from '@material-ui/icons/LiveTv';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import LiveTvIcon from '@material-ui/icons/LiveTv';
 
 
 function FilterOptions({ filteredTileStatus, filterTiles }) {
