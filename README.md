@@ -4,11 +4,17 @@
 ## Installation and Usage
 
 - Clone or download the repo
+- 
+- BACKEND SETUP
 - Within your virtual environment, run: ``` pip install -r requirements.txt``` 
 - Make your migrations
 - Run your Django server with ```python manage.py runserver```
 
+- FRONTEND SETUP (USE SEPERATE CLI TO BACKEND)
+- Whilst in the frontend directory, run ``` npm install ``` to install all node modules required
+- Once sucessfully installed, run ``` yarn start ``` within the frontend directory
  
+
 
 ## Assumptions & Comments
 
