@@ -47,11 +47,11 @@ class TaskOrderModal extends React.Component {
   }
 
   render() {
-    const { taskShow, tasks } = this.props
+    const { taskIndex, tasks } = this.props
     const { task_order } = this.state
     return (
       <>
-        <span onClick={this.showModal} className='task-number'>{taskShow + 1}/{tasks.length}</span>
+        <span onClick={this.showModal} className='task-number'>{taskIndex + 1}/{tasks.length}</span>
         <Modal
           title="Change Task Order, please select all tasks"
           visible={this.state.visible}
