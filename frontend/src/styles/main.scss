@@ -4,8 +4,9 @@ $fontsize: 10px;
 $primary_1: rgb(151, 206, 151);
 $primary_2: rgb(221, 218, 218);
 $primary_buttons: rgb(255, 198, 43);
-$icon_primary: grey!important; 
 $secondary_buttons: rgb(202, 159, 39);
+$icon_primary: grey!important;
+$icon_secondary: white!important; 
 
 * {
   margin: 0;
@@ -47,7 +48,7 @@ a {
   color: $icon_primary;
   &:hover {
     cursor: pointer;
-    color: white;
+    color: $icon_secondary;
   }
 }
 
@@ -64,7 +65,7 @@ a {
   color: $icon_primary;
   &:hover {
     cursor: pointer;
-    color: white;
+    color: $icon_secondary;
   }
 }
 

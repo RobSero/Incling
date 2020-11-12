@@ -6,7 +6,7 @@ import axios from 'axios'
 //  ------------------------------------------------------
 
   export const getTilesByStatusRequest = async (status) => {
-      return await axios.get(`/api/tiles/status/${status}`)
+      return await axios.get(`/api/tiles/status/${status}/`)
   }
 
 
@@ -15,7 +15,7 @@ import axios from 'axios'
   }
 
   export const deleteTileRequest = async (tileId) => {
-      return await axios.delete(`/api/tiles/${tileId}`)
+      return await axios.delete(`/api/tiles/${tileId}/`)
   }
 
   export const changeTileStatusRequest = async (tileId, newStatus) => {
@@ -35,12 +35,12 @@ import axios from 'axios'
 //  ------------------------------------------------------
 
   export const getTaskRequest = async (tileId) => {
-      return await axios.get(`/api/tasks/${tileId}`)
+      return await axios.get(`/api/tasks/${tileId}/`)
   }
 
 
   export const deleteTaskRequest = async (tileId) => {
-      return await axios.delete(`/api/tasks/${tileId}`)
+      return await axios.delete(`/api/tasks/${tileId}/`)
   } 
 
   export const createTaskRequest = async (taskData) => {
