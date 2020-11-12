@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, Redirect, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Utility & API Imports
 import { createTaskRequest } from '../../utils/api'
@@ -8,6 +8,9 @@ import { createTaskRequest } from '../../utils/api'
 import { message } from 'antd';
 
 
+/* ------------------------------------------------
+               NEW TASK PAGE VIEW
+--------------------------------------------------*/
 function NewTaskPage(props) {
   const { tileId } = useParams()
   const [task, setTask] = React.useState({
@@ -66,6 +69,5 @@ function NewTaskPage(props) {
     </div>
   )
 }
-
 
 export default NewTaskPage

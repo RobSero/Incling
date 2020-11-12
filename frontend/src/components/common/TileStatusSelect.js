@@ -1,6 +1,8 @@
 import React from 'react'
 
-
+/* ------------------------------------------------
+        TILE DROPDOWN FOR STATUS SELECTION
+--------------------------------------------------*/
 function TileStatusSelect({currentStatus,id,changeTileStatus}) {
   return (
     <select value={currentStatus} className='tile-status' onChange={(e) => { changeTileStatus(id, e) }}>

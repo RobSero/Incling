@@ -3,7 +3,9 @@ import React from 'react'
 //  Third party imports
 import { Modal } from 'antd';
 
-
+/* ------------------------------------------------
+           HANDLES THE ORDER OF THE TASKS
+--------------------------------------------------*/
 class TaskOrderModal extends React.Component {
   state = {
     visible: false,

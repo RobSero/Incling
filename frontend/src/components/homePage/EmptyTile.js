@@ -10,6 +10,9 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
+/* ------------------------------------------------
+          DISPLAYS WHEN TILE HAS NO TASKS
+--------------------------------------------------*/
 function EmptyTile({id, launch_date, updateTileDate, deleteTile, currentStatus, changeTileStatus}) {
   return (
     <div className='tile-container empty-tile animate__animated animate__fadeIn'>

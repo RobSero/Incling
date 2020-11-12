@@ -1,3 +1,15 @@
+@import './main.scss';
+
+//  ------------------------------------------------------
+//                     TILE CONTAINERS
+//  ------------------------------------------------------
+
+.tile-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly
+}
+
 .tile-container {
   background-color: white;
   width: 300px;
@@ -9,10 +21,14 @@
   box-shadow: rgb(189, 188, 188) 0 0 3px 3px;
 
   &:hover {
-    transform: translateY(-10px) ;
+    transform: translateY(-10px);
     box-shadow: rgb(189, 188, 188) 0 7px 7px 7px;
     z-index: 2;
   }
+
+  //  ------------------------------------------------------
+  //                       TILE DETAILS
+  //  ------------------------------------------------------
 
   .tile-status {
     position: absolute;
@@ -37,7 +53,6 @@
     border-top-right-radius: 10px;
   }
 
-
   .title-details {
     text-align: center;
     padding: 20px 40px;
@@ -48,7 +63,6 @@
     .task-title {
       font-size: 2rem;
     }
-
 
     .change-task-arrow {
       position: absolute;
@@ -137,13 +151,9 @@
   float: right;
 }
 
-
-
-
 //  ------------------------------------------------------
-//                      NEW TILE OUTLINE
+//                       NEW TILE
 //  ------------------------------------------------------
-
 
 .new-tile {
   border: 1px rgb(199, 193, 193) dashed;
@@ -168,16 +178,18 @@
 }
 
 
+//  ------------------------------------------------------
+//                        EMPTY TILE
+//  ------------------------------------------------------
 .empty-tile {
   text-align: center;
   background-image: linear-gradient(rgba(238, 235, 37, 0.596), rgba(72, 173, 111, 0.37));
 
   .empty-tile-details {
     margin-top: 30%;
+
     p {
       font-size: 1.5rem;
     }
   }
 }
-
-

@@ -1,19 +1,22 @@
 import React from 'react'
-import { useParams, Redirect, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Utility & API Imports
 import { getTaskRequest, updateTaskRequest, deleteTaskRequest } from '../../utils/api'
-import { taskTypes } from '../../utils/taskTypes'
 
 // Third Party Imports
 import DeleteIcon from '@material-ui/icons/Delete';
 import { message } from 'antd';
 
 
+/* ------------------------------------------------
+               EDIT TASK PAGE VIEW
+--------------------------------------------------*/
 function EditTaskPage(props) {
   const { taskId } = useParams()
   const [task, setTask] = React.useState()
 
+  // Get task on mount
   React.useEffect(() => {
     const getTask = async (taskId) => {
       try {
@@ -24,7 +27,7 @@ function EditTaskPage(props) {
       }
     }
     getTask(taskId)
-  }, [])
+  }, [taskId])
 
 
   const userInput = ({ target }) => {
@@ -49,6 +52,7 @@ function EditTaskPage(props) {
   const deleteTask = async (taskId) => {
     try {
       await deleteTaskRequest(taskId)
+      message.success('Deleted Successfully!');
       props.history.push('/');
     } catch (err) {
       console.log(err);
@@ -70,6 +74,7 @@ function EditTaskPage(props) {
         </div>
       </div>
       <br />
+
       <div className='description-section animate__animated animate__fadeIn'>
         <form onSubmit={submitTask}>
           <label>Task Title</label>
@@ -91,10 +96,7 @@ function EditTaskPage(props) {
           <br />
           <button className='btn submit-button' type='submit'>Update Task</button>
         </form>
-
       </div>
-
-
     </div>
   )
 }

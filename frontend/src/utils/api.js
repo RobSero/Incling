@@ -1,6 +1,9 @@
 import axios from 'axios'
-  // ------------------  TILE CRUD FUNCTIONS ------------------------
 
+
+//  ------------------------------------------------------
+//                    TILE API REQUESTS
+//  ------------------------------------------------------
 
   export const getTilesByStatusRequest = async (status) => {
       return await axios.get(`/api/tiles/status/${status}`)
@@ -27,6 +30,9 @@ import axios from 'axios'
     return await axios.patch(`/api/tiles/${tileId}/`, { task_order: newTaskOrder })
 }
 
+//  ------------------------------------------------------
+//                    TASK API REQUESTS
+//  ------------------------------------------------------
 
   export const getTaskRequest = async (tileId) => {
       return await axios.get(`/api/tasks/${tileId}`)

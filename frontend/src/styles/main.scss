@@ -1,12 +1,21 @@
+$bgcolor: rgb(255, 255, 255);
+$textcolor: rgb(0, 0, 0);
+$fontsize: 10px;
+$primary_1: rgb(151, 206, 151);
+$primary_2: rgb(221, 218, 218);
+$primary_buttons: rgb(255, 198, 43);
+$secondary_buttons: rgb(202, 159, 39);
+
 * {
   margin: 0;
   padding: 0;
-  font-size: 10px;   // I normally set it to 10px and then work with rem on fonts
+  font-size: $fontsize;   // I normally set it to 10px and then work with rem on fonts
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
-  background-color: #fff9f0;
+  background-color: $bgcolor  ;
+  color: $textcolor;
   background-image: url("https://www.transparenttextures.com/patterns/diamond-upholstery.png");
 }
 
@@ -16,17 +25,18 @@ a {
 } 
 
 
+
 //  ------------------------------------------------------
 //                      CORE ITEMS STYLES
 //  ------------------------------------------------------
 
 .btn {
-  background-color: rgb(255, 198, 43);
+  background-color: $primary_buttons;
     padding: 10px 25px;
     border-radius: 5px;
     transition: all 0.5s ease;
     &:hover {
-      background-color: rgb(202, 159, 39);
+      background-color: $secondary_buttons;
       cursor: pointer;
     }
 }
@@ -48,8 +58,6 @@ a {
   }
 }
 
-
-
 .icon-med {
   font-size: 5rem!important;
   color: grey;
@@ -59,6 +67,11 @@ a {
   }
 }
 
-.selected {
-  background-color: rgba(105, 211, 105, 0.671);
+.icon-large {
+  font-size: 3rem;
+  fill: grey;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

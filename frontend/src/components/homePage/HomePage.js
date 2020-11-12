@@ -12,11 +12,14 @@ import Tile from './Tile'
 // Third Party Imports
 import { message } from 'antd';
 
-
+/* ------------------------------------------------
+               MAIN TILE INDEX VIEW
+--------------------------------------------------*/
 function HomePage() {
   const [allTiles, setTiles] = React.useState([])
-  const [filteredTileStatus, setTileFilter] = React.useState(0)
+  const [currentTileStatus, setTileStatusFilter] = React.useState(0)
 
+  // get tiles based on the selected tile status tab 
   const getTilelist = async (status) => {
     try {
       const response = await getTilesByStatusRequest(status)
@@ -26,67 +29,69 @@ function HomePage() {
     }
   }
 
-  //  ------------------  GET TILES AND SET STATE ------------------------
+  // Get live status tiles on component mount
   React.useEffect(() => {
-    getTilelist(filteredTileStatus)
-  }, [filteredTileStatus])
+    getTilelist(currentTileStatus)
+  }, [currentTileStatus])
 
 
   const filterTiles = (status) => {
-    setTileFilter(status)
+    setTileStatusFilter(status)
   }
 
+  // Locally filter tiles away when changed rather than fetching all tiles again, reduce http requests
   const localTileFilter = (tileId) => {
-    if (filteredTileStatus !== 4) {
+    if (currentTileStatus !== 4) {
       const filteredTiles = allTiles.filter(tile => {
-        if (tile.id !== tileId) { return tile }
+        if (tile.id !== tileId) return tile
       })
       setTiles(filteredTiles)
     }
   }
 
-
   const createTile = async () => {
     try {
-      await createTileRequest(filteredTileStatus)
-      getTilelist(filteredTileStatus)
+      const newTile = await createTileRequest(currentTileStatus)
+      setTiles([...allTiles, newTile.data])
       message.success('Tile Created!');
     } catch (err) {
       console.log(err);
       message.error('Failed, please try again');
     }
-
   }
 
   const deleteTile = async (tileId) => {
     try {
       await deleteTileRequest(tileId)
-      getTilelist(filteredTileStatus)
+      getTilelist(currentTileStatus)
     } catch (err) {
       console.log(err);
       message.error('Failed, please try again');
     }
   }
 
-
   const updateTileDate = async (tileId, newDate) => {
     await updateTileLaunchDateRequest(tileId, newDate.toISOString())
-    const response = await getTilesByStatusRequest(filteredTileStatus)
-    setTiles(response.data)
+    try {
+      const response = await getTilesByStatusRequest(currentTileStatus)
+      setTiles(response.data)
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
     <div>
       <HeaderSection />
       <div className='responsive-container'>
-        <FilterOptions filteredTileStatus={filteredTileStatus} filterTiles={filterTiles} />
+        <FilterOptions currentTileStatus={currentTileStatus} filterTiles={filterTiles} />
         {/* CARD SECTION */}
         <div className='tile-flex-container'>
           {allTiles.map(tile => {
             return <Tile key={tile.id} {...tile} deleteTile={deleteTile} localTileFilter={localTileFilter} updateTileDate={updateTileDate} />
           })}
-          { filteredTileStatus !== 4 ? <NewTile createTile={createTile} /> : ''}
-          
+          {/* NEW TILE CARD - NOT VISIBLE ON 'ALL' TAB */}
+          {currentTileStatus !== 4 ? <NewTile createTile={createTile} /> : ''}
         </div>
       </div>
     </div>

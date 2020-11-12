@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, Redirect, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 // Utility & API Imports
 import { getTaskRequest, deleteTaskRequest } from '../../utils/api'
@@ -9,20 +9,21 @@ import { taskTypes } from '../../utils/taskTypes'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-
+/* ------------------------------------------------
+               VIEW TASK PAGE VIEW
+--------------------------------------------------*/
 function TaskPage(props) {
   const [task, setTask] = React.useState()
   const { taskId } = useParams()
 
-  //  ------------------  ON MOUNT FUNCTION ------------------------
+//  Get task on mount
   React.useEffect(() => {
-    console.log(taskId);
     const getTask = async (taskId) => {
       const response = await getTaskRequest(taskId)
       setTask(response.data)
     }
     getTask(taskId)
-  }, [])
+  }, [taskId])
 
   const deleteTask = async (taskId) => {
     await deleteTaskRequest(taskId)
