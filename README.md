@@ -1,20 +1,38 @@
 # Incling - Django REST Framework Sample
 
+## NEW COMMENTS HERE RELATED TO REACT APP
 
 ## Installation and Usage
 
 - Clone or download the repo
-- 
-- BACKEND SETUP
+
+BACKEND SETUP
 - Within your virtual environment, run: ``` pip install -r requirements.txt``` 
 - Make your migrations
 - Run your Django server with ```python manage.py runserver```
 
-- FRONTEND SETUP (USE SEPERATE CLI TO BACKEND)
+FRONTEND SETUP (USE SEPERATE CLI TO BACKEND)
 - Whilst in the frontend directory, run ``` npm install ``` to install all node modules required
 - Once sucessfully installed, run ``` yarn start ``` within the frontend directory
  
 
+
+## React Task Notes:
+- I decided to go back to the drawing board with regards to the tile not containing a task, now they can be empty and visually shown on the frontend
+- Revised the task model order field and added in meta data ``` order_with_respect_to = 'tile' ``` to help with task ordering in a tile
+- You can change the task order within the tile by clicking on the tasklist size (ex. 2/4) - only works if a tile has at least 2 tasks in it
+- Most / All components are responsive for all screen sizes, as much as I could within the given time
+- Focus was on minimizing http requests where possible by altering arrays of tasks locally and then re-fetching the data less frequently
+- Changing the launch date will re-order them.
+- Thought I’d try css without barely any frameworks, always good practice! 
+
+## Improvements:
+- Explore ways of not causing http requests on deleteTile and updateTileTime
+- Used a bit of proptypes during development but still needs React testing
+- Some Error Handling is present but not to a massive degree 
+
+
+## BELOW IS THE OLD DJANGO README
 
 ## Assumptions & Comments
 
