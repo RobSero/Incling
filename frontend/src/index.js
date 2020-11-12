@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-
+// StyleSheet Imports
 import './styles/main.scss'
 import './styles/homePage.scss'
 import './styles/taskPage.scss'

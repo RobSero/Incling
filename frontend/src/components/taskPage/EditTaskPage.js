@@ -1,9 +1,14 @@
 import React from 'react'
 import { useParams, Redirect, Link } from "react-router-dom";
+
+// Utility & API Imports
 import { getTaskRequest, updateTaskRequest, deleteTaskRequest } from '../../utils/api'
+import { taskTypes } from '../../utils/taskTypes'
+
+// Third Party Imports
 import DeleteIcon from '@material-ui/icons/Delete';
 import { message } from 'antd';
-import { taskTypes } from '../../utils/taskTypes'
+
 
 function EditTaskPage(props) {
   const { taskId } = useParams()
@@ -28,7 +33,7 @@ function EditTaskPage(props) {
     setTask({ ...task, [inputName]: inputValue })
   }
 
-  
+
   const submitTask = async (e) => {
     e.preventDefault()
     try {
@@ -39,7 +44,6 @@ function EditTaskPage(props) {
       console.log(err);
       message.error('Failed, please try again');
     }
-
   }
 
   const deleteTask = async (taskId) => {
@@ -50,7 +54,6 @@ function EditTaskPage(props) {
       console.log(err);
       message.error('Failed, please try again');
     }
-
   }
 
 

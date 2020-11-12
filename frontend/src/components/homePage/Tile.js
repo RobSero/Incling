@@ -1,16 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
+// Utility & API Imports
+import { updateTileTaskOrderRequest, changeTileStatusRequest } from '../../utils/api'
+import { taskTypes } from '../../utils/taskTypes'
+
+// Component Imports
 import TaskOrderModal from '../common/TaskOrderModal'
-import { message } from 'antd';
 import TileStatusSelect from '../common/TileStatusSelect'
 import LaunchDate from '../common/LaunchDate'
+import EmptyTile from './EmptyTile'
+
+// Third Party Imports
+import { message } from 'antd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { updateTileTaskOrderRequest, changeTileStatusRequest } from '../../utils/api'
-import { taskTypes } from '../../utils/taskTypes'
 
 
 function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, localTileFilter }) {
@@ -29,6 +36,7 @@ function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, loca
       const response = await updateTileTaskOrderRequest(id, newTaskOrder)
       setTaskList(response.data.tasks)
     } catch (err) {
+      console.log(err);
     }
   }
 
@@ -36,6 +44,7 @@ function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, loca
     const newStatus = target.value
     try {
       await changeTileStatusRequest(tileId, newStatus)
+      setStatus(newStatus)
       message.success('Changed Tile Status');
       localTileFilter(id)
     } catch (err) {
@@ -48,17 +57,13 @@ function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, loca
 
   if (taskList.length == 0) {
     return (
-      <div className='tile-container empty-tile animate__animated animate__fadeIn'>
-        <TileStatusSelect currentStatus={currentStatus} id={id} changeTileStatus={changeTileStatus} />
-        <div className='edit-tile-buttons'>
-          <DeleteIcon className='icon-sml' onClick={() => { deleteTile(id) }} />
-        </div>
-        <div className='empty-tile-details'>
-          <p>No tasks in your tile...yet!</p>
-          <Link to={`/tiles/${id}/newtask`}><AddCircleOutlineIcon className='icon-med' /></Link>
-        </div>
-        <LaunchDate id={id} launch_date={launch_date} updateTileDate={updateTileDate} />
-      </div>
+      <EmptyTile
+        id={id}
+        launch_date={launch_date}
+        updateTileDate={updateTileDate}
+        deleteTile={deleteTile}
+        currentStatus={currentStatus}
+        changeTileStatus={changeTileStatus} />
     )
   }
 
@@ -67,7 +72,7 @@ function Tile({ tasks, id, launch_date, status, deleteTile, updateTileDate, loca
 
   return (
     <div className='tile-container animate__animated animate__fadeIn'>
-      <TileStatusSelect status={status} id={id} changeTileStatus={changeTileStatus} />
+      <TileStatusSelect currentStatus={currentStatus} id={id} changeTileStatus={changeTileStatus} />
       <div className='edit-tile-buttons'>
         <Link to={`/tiles/${id}/newtask`}><AddCircleOutlineIcon className='icon-sml' /></Link>
         <DeleteIcon className='icon-sml' onClick={() => { deleteTile(id) }} />

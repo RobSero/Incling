@@ -1,9 +1,11 @@
 import React from 'react'
 import { useParams, Redirect, Link } from "react-router-dom";
+
+// Utility & API Imports
 import { createTaskRequest } from '../../utils/api'
-import { message} from 'antd';
 
-
+// Third Party Imports
+import { message } from 'antd';
 
 
 function NewTaskPage(props) {
@@ -14,7 +16,6 @@ function NewTaskPage(props) {
     task_type: 0,
     tile: tileId
   })
-
 
   const userInput = (event) => {
     const inputValue = event.target.value
@@ -28,12 +29,11 @@ function NewTaskPage(props) {
       await createTaskRequest(task)
       message.success('Task Added!');
       props.history.push('/');
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       message.error('Failed, please try again');
     }
   }
-
 
   return (
     <div className='task-container'>
@@ -63,8 +63,6 @@ function NewTaskPage(props) {
           <button className='btn submit-button' type='submit'>Create Task</button>
         </form>
       </div>
-
-
     </div>
   )
 }

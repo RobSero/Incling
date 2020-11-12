@@ -1,15 +1,18 @@
 import React from 'react'
 import { useParams, Redirect, Link } from "react-router-dom";
+
+// Utility & API Imports
 import { getTaskRequest, deleteTaskRequest } from '../../utils/api'
 import { taskTypes } from '../../utils/taskTypes'
 
+// Third Party Imports
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+
 
 function TaskPage(props) {
   const [task, setTask] = React.useState()
   const { taskId } = useParams()
-
 
   //  ------------------  ON MOUNT FUNCTION ------------------------
   React.useEffect(() => {
@@ -21,14 +24,10 @@ function TaskPage(props) {
     getTask(taskId)
   }, [])
 
-
   const deleteTask = async (taskId) => {
     await deleteTaskRequest(taskId)
     props.history.push('/');
   }
-
-
-
 
   if (!task) {
     return null
@@ -50,11 +49,8 @@ function TaskPage(props) {
         <p className='task-description-header'>Task Overview</p>
         <p className='task-description'>{task.description}</p>
       </div>
-
-
     </div>
   )
 }
-
 
 export default TaskPage

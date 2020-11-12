@@ -1,10 +1,15 @@
 import React from 'react'
+
+// API Imports
 import { getTilesByStatusRequest, createTileRequest, deleteTileRequest, updateTileLaunchDateRequest } from '../../utils/api'
 
+// Component Imports
 import HeaderSection from './HeaderSection'
 import FilterOptions from './FilterOptions'
 import NewTile from './NewTile'
 import Tile from './Tile'
+
+// Third Party Imports
 import { message } from 'antd';
 
 
@@ -21,10 +26,7 @@ function HomePage() {
     }
   }
 
-
-
-
-  //  ------------------  ON MOUNT FUNCTION ------------------------
+  //  ------------------  GET TILES AND SET STATE ------------------------
   React.useEffect(() => {
     getTilelist(filteredTileStatus)
   }, [filteredTileStatus])

@@ -1,5 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+
+//  Views / Pages Imports
 import Navbar from './components/common/Navbar'
 import HomePage from './components/homePage/HomePage'
 import TaskPage from './components/taskPage/TaskPage'
@@ -12,14 +14,12 @@ function App() {
     <BrowserRouter>
     <Navbar />
     <Switch>
-      
       <Route exact path='/:taskId' component={TaskPage} />
       <Route exact path='/:taskId/update' component={EditTaskPage} />
       <Route exact path='/:tiles/:tileId/newtask' component={NewTaskPage} />
       <Route exact path='/' component={HomePage} />
       <Route exact path='/*' component={HomePage} />
     </Switch>
-      
     </BrowserRouter>
   );
 }

@@ -83,8 +83,13 @@
     left: 8px;
     font-size: 1.4rem;
     background: rgba(151, 153, 151, 0.753);
-    padding: 18px 15px;
+    padding: 15px;
     border-radius: 50%;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(109, 109, 109, 0.753);
+    }
   }
 
   .tile-date {
@@ -96,6 +101,8 @@
     .date-picker {
       font-size: 1.1rem;
       width: 100px;
+      border: 1px grey solid;
+      margin-left: 5px;
     }
   }
 }

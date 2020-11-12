@@ -1,6 +1,8 @@
 import React from 'react'
+
+//  Third party imports
 import { Modal } from 'antd';
-import { updateTileTaskOrderRequest } from '../../utils/api'
+
 
 class TaskOrderModal extends React.Component {
   state = {
