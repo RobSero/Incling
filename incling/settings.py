@@ -57,7 +57,7 @@ ROOT_URLCONF = 'incling.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR)
+        'DIRS': [os.path.join(BASE_DIR, "frontend")
                  ] 
         ,
         'APP_DIRS': True,
@@ -78,12 +78,19 @@ WSGI_APPLICATION = 'incling.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'inclingdb',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inclingdb',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,7 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "build", "static"), 
+    os.path.join(BASE_DIR, "frontend", "build", "static"), 
 )
 
 django_heroku.settings(locals()) 
