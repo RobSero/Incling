@@ -82,6 +82,7 @@ class TileViewSet(viewsets.ViewSet):
     obj_tile = get_tile(pk=pk)
     task_order = request.data.get('task_order', None)
     if task_order:
+      print(task_order)
       obj_tile.set_task_order(task_order)
     serialized_tile = TileSerializer(obj_tile,data=request.data, partial=True)
     if serialized_tile.is_valid():

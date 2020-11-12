@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import TaskOrderModal from '../common/TaskOrderModal'
 
 import TileStatusSelect from '../common/TileStatusSelect'
 import LaunchDate from '../common/LaunchDate'
@@ -8,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import { updateTileTaskOrderRequest } from '../../utils/api'
 import { taskTypes } from '../../utils/taskTypes'
 
 
@@ -18,6 +19,16 @@ function Tile({ tasks, id, launch_date, status, changeTileStatus, deleteTile, up
   const changeTaskShow = (value) => {
     if (taskShow + value < tasks.length && taskShow + value >= 0) {
       setTaskShow(taskShow + value)
+    }
+  }
+
+  const updateTaskOrder = async(newTaskOrder) => {
+    console.log(newTaskOrder);
+    try {
+      const response = await updateTileTaskOrderRequest(id, newTaskOrder)
+      console.log(response.data);
+    } catch(err) {
+      console.log(err);
     }
   }
 
@@ -50,7 +61,7 @@ function Tile({ tasks, id, launch_date, status, changeTileStatus, deleteTile, up
         <DeleteIcon className='icon-sml' onClick={() => { deleteTile(id) }} />
       </div>
       <img className='tile-image' src='https://res.cloudinary.com/dy7eycl8m/image/upload/v1605042317/stream-5680609_640_uwhrlw.jpg' />
-      <span className='task-number'>{taskShow + 1}/{tasks.length}</span>
+      <TaskOrderModal taskShow={taskShow} tasks={tasks} updateTaskOrder={updateTaskOrder} />
       <div className='title-details'>
         {taskShow !== 0 ? <ChevronLeftIcon className='change-task-arrow left-arrow icon-arrows' onClick={() => changeTaskShow(-1)} /> : ''}
         {taskShow + 1 < tasks.length ? <ChevronRightIcon className='change-task-arrow right-arrow icon-arrows' onClick={() => changeTaskShow(1)} /> : ''}

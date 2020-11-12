@@ -23,6 +23,10 @@ import axios from 'axios'
       return await axios.patch(`/api/tiles/${tileId}/`, { launch_date: newDate })
   }
 
+  export const updateTileTaskOrderRequest = async (tileId, newTaskOrder) => {
+    return await axios.patch(`/api/tiles/${tileId}/`, { task_order: newTaskOrder })
+}
+
 
   export const getTaskRequest = async (tileId) => {
       return await axios.get(`/api/tasks/${tileId}`)
