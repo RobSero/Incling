@@ -1,5 +1,5 @@
 import React from 'react'
-import { getTilesByStatusRequest, createTileRequest, deleteTileRequest, changeTileStatusRequest, updateTileLaunchDateRequest } from '../../utils/api'
+import { getTilesByStatusRequest, createTileRequest, deleteTileRequest, updateTileLaunchDateRequest } from '../../utils/api'
 
 import HeaderSection from './HeaderSection'
 import FilterOptions from './FilterOptions'
@@ -35,10 +35,12 @@ function HomePage() {
   }
 
   const localTileFilter = (tileId) => {
-    const reducedArray = allTiles.filter(tile => {
-      if (tile.id !== tileId) { return tile }
-    })
-    setTiles(reducedArray)
+    if (filteredTileStatus !== 4) {
+      const filteredTiles = allTiles.filter(tile => {
+        if (tile.id !== tileId) { return tile }
+      })
+      setTiles(filteredTiles)
+    }
   }
 
 
@@ -57,27 +59,12 @@ function HomePage() {
   const deleteTile = async (tileId) => {
     try {
       await deleteTileRequest(tileId)
-      localTileFilter(tileId)
+      getTilelist(filteredTileStatus)
     } catch (err) {
       console.log(err);
       message.error('Failed, please try again');
     }
   }
-
-  const changeTileStatus = async (tileId, event) => {
-    const newStatus = event.target.value
-    try {
-      await changeTileStatusRequest(tileId, newStatus)
-      message.success('Changed Tile Status');
-      if (filteredTileStatus !== 4) {
-        localTileFilter(tileId)
-      }
-    } catch (err) {
-      console.log(err);
-      message.error('Failed, please try again');
-    }
-  }
-
 
 
   const updateTileDate = async (tileId, newDate) => {
@@ -94,9 +81,10 @@ function HomePage() {
         {/* CARD SECTION */}
         <div className='tile-flex-container'>
           {allTiles.map(tile => {
-            return <Tile key={tile.id} {...tile} deleteTile={deleteTile} changeTileStatus={changeTileStatus} updateTileDate={updateTileDate} />
+            return <Tile key={tile.id} {...tile} deleteTile={deleteTile} localTileFilter={localTileFilter} updateTileDate={updateTileDate} />
           })}
-          <NewTile createTile={createTile} />
+          { filteredTileStatus !== 4 ? <NewTile createTile={createTile} /> : ''}
+          
         </div>
       </div>
     </div>

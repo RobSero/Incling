@@ -9,20 +9,21 @@ class TaskOrderModal extends React.Component {
   };
 
   showModal = () => {
-    if(this.props.tasks.length > 1) {
+    if (this.props.tasks.length > 1) {
       this.setState({
         visible: true,
+        task_order: []
       });
     }
   };
 
-  handleOk = async() => {
-    if (this.state.task_order.length === this.props.tasks.length){
+  handleOk = async () => {
+    if (this.state.task_order.length === this.props.tasks.length) {
       this.props.updateTaskOrder(this.state.task_order)
-    this.setState({
-      visible: false,
-    });
-    } 
+      this.setState({
+        visible: false,
+      });
+    }
   };
 
   handleCancel = e => {
@@ -43,7 +44,7 @@ class TaskOrderModal extends React.Component {
 
   render() {
     const { taskShow, tasks } = this.props
-    const {task_order} = this.state
+    const { task_order } = this.state
     return (
       <>
         <span onClick={this.showModal} className='task-number'>{taskShow + 1}/{tasks.length}</span>
@@ -55,7 +56,11 @@ class TaskOrderModal extends React.Component {
         >
           {tasks.map(task => {
             return (
-              <p key={task.id} className={task_order.includes(task.id) ? 'selected' : ''} onClick={() => { this.updateTaskOrder(task.id) }}>{task.title}</p>
+              <div key={task.id} className={`task-option ${task_order.includes(task.id) ? 'selected' : ''}`} onClick={() => { this.updateTaskOrder(task.id) }}>
+                <p>{task.title}</p>
+                {task_order.includes(task.id) ? <p>{task_order.indexOf(task.id) + 1}</p> : ''}
+              </div>
+
             )
           })}
 
